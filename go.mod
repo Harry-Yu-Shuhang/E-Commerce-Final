@@ -6,6 +6,7 @@ require (
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/kataras/iris/v12 v12.2.11
 	github.com/opentracing/opentracing-go v1.2.0
+	golang.org/x/crypto v0.22.0
 )
 
 require (
@@ -53,7 +54,6 @@ require (
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/yosssi/ace v0.0.5 // indirect
-	golang.org/x/crypto v0.22.0 // indirect
 	golang.org/x/exp v0.0.0-20240404231335-c0f41cb1a7a0 // indirect
 	golang.org/x/net v0.24.0 // indirect
 	golang.org/x/sys v0.19.0 // indirect

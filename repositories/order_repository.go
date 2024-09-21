@@ -52,6 +52,7 @@ func (o *OrderManagerRepository) Insert(order *datamodels.Order) (productID int6
 	if err != nil {
 		return productID, err
 	}
+	defer stmt.Close()
 	result, err := stmt.Exec(order.UserID, order.ProductID, order.OrderStatus)
 	if err != nil {
 		return productID, err
@@ -70,6 +71,7 @@ func (o *OrderManagerRepository) Delete(productID int64) (isOk bool) { //删除�
 	if err != nil {
 		return
 	}
+	defer stmt.Close()
 	_, err = stmt.Exec(productID) //填入sql语句的变量ID
 	if err != nil {
 		return
@@ -86,6 +88,7 @@ func (o *OrderManagerRepository) Update(order *datamodels.Order) error { //更�
 	if err != nil {
 		return err
 	}
+	defer stmt.Close()
 	_, err = stmt.Exec(order.UserID, order.ProductID, order.OrderStatus)
 	if err != nil {
 		return err
@@ -102,6 +105,7 @@ func (o *OrderManagerRepository) SelectByKey(orderID int64) (order *datamodels.O
 	if err != nil {
 		return &datamodels.Order{}, err
 	}
+	defer row.Close()
 	result := common.GetResultRow(row)
 	if len(result) == 0 {
 		return &datamodels.Order{}, err
@@ -120,6 +124,7 @@ func (o *OrderManagerRepository) SelectAll() (orderArray []*datamodels.Order, er
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 	result := common.GetResultRows(rows)
 	if len(result) == 0 {
 		return nil, err
@@ -141,6 +146,7 @@ func (o *OrderManagerRepository) SelectAllWithInfo() (OrderMap map[int]map[strin
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 	OrderMap = common.GetResultRows(rows)
 	return
 }

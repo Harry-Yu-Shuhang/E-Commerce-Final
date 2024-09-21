@@ -48,7 +48,7 @@ func (p *ProductController) GetAdd() mvc.View {
 
 func (p *ProductController) PostAdd() { //添加
 	product := &datamodels.Product{}
-	p.Ctx.Request().ParseForm()
+	p.Ctx.Request().ParseForm() //解析http中Post请求的数据
 	dec := common.NewDecoder(&common.DecoderOptions{TagName: "imooc"})
 	if err := dec.Decode(p.Ctx.Request().Form, product); err != nil {
 		p.Ctx.Application().Logger().Debug(err)

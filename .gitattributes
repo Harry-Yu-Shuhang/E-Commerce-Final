@@ -4,3 +4,4 @@
 #Only detect Golang
 * linguist-vendored
 *.go linguist-vendored=false
+*.html linguist-vendored=false

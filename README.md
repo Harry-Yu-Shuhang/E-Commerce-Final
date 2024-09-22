@@ -22,6 +22,7 @@ Product management interface as below:
 <img width="1189" alt="image" src="https://github.com/user-attachments/assets/c381b999-c6e0-48da-b77b-ec67fa6a7ef6">
 
 User interface:(Pending to be completed):
+
 <img width="439" alt="image" src="https://github.com/user-attachments/assets/a2a6fd48-39fc-414e-b928-a610530a3738">
 
 

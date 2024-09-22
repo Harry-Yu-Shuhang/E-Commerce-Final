@@ -16,7 +16,8 @@ User Name pending to be defined.
 Product management interface as below:
 
 1.View product:
-<img width="1383" alt="image" src="https://github.com/user-attachments/assets/f4ffc2c3-771f-47b5-9658-1ad31107d75a">
+<img width="1147" alt="image" src="https://github.com/user-attachments/assets/7a01dd1d-c9e8-4fb0-9c83-2cd778536dd8">
+
 
 2.Add product:
 <img width="1189" alt="image" src="https://github.com/user-attachments/assets/c381b999-c6e0-48da-b77b-ec67fa6a7ef6">

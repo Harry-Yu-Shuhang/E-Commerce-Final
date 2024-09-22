@@ -27,7 +27,8 @@ User interface:(Pending to be completed):
 
 Password storaged in hash to protect privacy.
 
-<img width="769" alt="image" src="https://github.com/user-attachments/assets/3277930e-62a9-4954-a90f-fbe7d5986300">
+<img width="769" alt="image" src="https://github.com/user-attachments/assets/0f15fcab-ed76-48d0-81fe-80e0495216b8">
+
 
 
 

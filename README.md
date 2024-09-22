@@ -7,7 +7,8 @@ Finished order and product management.
 Order management interface as below:
 
 1.View Order:
-<img width="1151" alt="image" src="https://github.com/user-attachments/assets/8cd1bb6a-2a25-4fa9-9784-1ccde60696ac">
+<img width="1147" alt="image" src="https://github.com/user-attachments/assets/44c22592-941b-4f1b-825e-790d2fc3c8dc">
+
 User Name pending to be defined.
 
 2.Add Order:
@@ -16,8 +17,7 @@ User Name pending to be defined.
 Product management interface as below:
 
 1.View product:
-<img width="1147" alt="image" src="https://github.com/user-attachments/assets/7a01dd1d-c9e8-4fb0-9c83-2cd778536dd8">
-
+<img width="1313" alt="image" src="https://github.com/user-attachments/assets/607ff216-8e50-4910-b7cf-cf8755ad363f">
 
 2.Add product:
 <img width="1189" alt="image" src="https://github.com/user-attachments/assets/c381b999-c6e0-48da-b77b-ec67fa6a7ef6">

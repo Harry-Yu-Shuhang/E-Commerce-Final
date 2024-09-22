@@ -3,4 +3,5 @@
 
 #Only detect Golang
 * linguist-vendored
-*.go,SCSS linguist-vendored=false
+*.go linguist-vendored=false
+*.SCSS linguist-vendored=false

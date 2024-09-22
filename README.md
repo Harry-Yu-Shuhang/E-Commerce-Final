@@ -25,5 +25,10 @@ User interface:(Pending to be completed):
 
 <img width="439" alt="image" src="https://github.com/user-attachments/assets/a2a6fd48-39fc-414e-b928-a610530a3738">
 
+Password storaged in hash to protect privacy.
+
+<img width="769" alt="image" src="https://github.com/user-attachments/assets/3277930e-62a9-4954-a90f-fbe7d5986300">
+
+
 
 

@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
-* text=auto
+#* text=auto
+
+#Only detect Golang
+* linguist-vendored
+*.go linguist-vendored=false
+*.SCSS linguist-vendored=false

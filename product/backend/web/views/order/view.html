@@ -1,0 +1,60 @@
+<div class="page-head">
+    <!-- 订单管理 -->
+    <h2 class="page-head-title">Order Management</h2>
+</div>
+
+<div class="main-content container-fluid">
+    <div class="row">
+        <!--Responsive table-->
+        <div class="col-sm-12">
+            <div class="panel panel-default panel-table">
+                <!-- 订单列表 -->
+                <div class="panel-heading">Order List
+
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive noSwipe">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <!-- 订单ID -->
+                                <th style="width:20%;">Order ID</th>
+                                <!-- 用户名称 -->
+                                <th style="width:17%;">User Name</th>
+                                <!-- 商品名称 -->
+                                <th style="width:15%;">Product Name</th>
+                                <!-- 发货状态 -->
+                                <th style="width:10%;">Shipping Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--遍历传入的order数据-->
+                            {{range $i, $v := .order}}
+                            <tr>
+                                <!-- 用的sql映射模板，属性都是datamodel里面sql的 -->
+                                <td class="user-avatar cell-detail user-info">{{$v.ID}}</td>
+                                <td class="cell-detail"></td>
+                                <td class="milestone"> {{$v.productName}}
+                                </td>
+                                <!-- 已发货 未发货 -->
+                                <td class="cell-detail">{{ if eq $v.orderStatus "1"}} Shipped {{else}} Not Shipped {{end}}</td>
+                                <td class="cell-detail">
+                                    <a href="/order/manager?id={{$v.ID}}">
+                                        <!-- 修改 -->
+                                        <button class="btn btn-space btn-primary">Modify</button>
+                                    </a>
+                                    <a href="/order/delete?id={{$v.ID}}">
+                                        <!-- 删除 -->
+                                        <button class="btn btn-space btn-danger">Delete</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{end}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

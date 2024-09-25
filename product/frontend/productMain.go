@@ -13,7 +13,7 @@ func main() {
 	app.HandleDir("/html", iris.Dir("./frontend/web/htmlProductShow"))
 
 	app.Run(
-		iris.Addr("0.0.0.0:80"),
+		iris.Addr("0.0.0.0:80"), //这里改成80为云服务器，8083为本地
 		iris.WithoutServerError(iris.ErrServerClosed),
 		iris.WithOptimizations,
 	)

@@ -1,20 +1,21 @@
 package controllers
 
 import (
+	"fmt"
 	"imooc-product/datamodels"
+	"imooc-product/encrypt"
 	"imooc-product/services"
 	"imooc-product/tool"
 	"strconv"
 
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/mvc"
-	"github.com/kataras/iris/v12/sessions"
 )
 
 type UserController struct {
 	Ctx     iris.Context
 	Service services.IUserService
-	Session *sessions.Session
+	// Session *sessions.Session//优化后抛弃
 }
 
 func (c *UserController) GetRegister() mvc.View {
@@ -52,19 +53,28 @@ func (c *UserController) GetLogin() mvc.View {
 }
 
 func (c *UserController) PostLogin() mvc.Response {
-	// fmt.Println("login start")
+	//1.获取用户提交的表单信息
 	var (
 		userName = c.Ctx.FormValue("userName")
 		password = c.Ctx.FormValue("password")
 	)
+	//2.验证账号密码正确
 	user, isOk := c.Service.IsPwdSuccess(userName, password)
 	if !isOk {
 		return mvc.Response{
 			Path: "/user/login",
 		}
 	}
+	//3.写入用户id到Cookie中
 	tool.GlobalCookie(c.Ctx, "uid", strconv.FormatInt(user.ID, 10))
-	c.Session.Set("userID", strconv.FormatInt(user.ID, 10)) //Session是登陆用的
+	uidByte := []byte(strconv.FormatInt(user.ID, 10))
+	uidString, err := encrypt.EnPwdCode(uidByte)
+	if err != nil {
+		fmt.Println(err)
+	}
+	//写入用户浏览器
+	tool.GlobalCookie(c.Ctx, "sign", uidString) //签名重命名为sign,加密以后的字符串存储在sign这个cookie中
+	// c.Session.Set("userID", strconv.FormatInt(user.ID, 10)) //Session是登陆用的,优化后不要了
 	return mvc.Response{
 		Path: "/product/",
 	}

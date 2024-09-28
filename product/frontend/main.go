@@ -7,11 +7,9 @@ import (
 	"imooc-product/frontend/web/controllers"
 	"imooc-product/repositories"
 	"imooc-product/services"
-	"time"
 
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/mvc"
-	"github.com/kataras/iris/v12/sessions"
 	"github.com/opentracing/opentracing-go/log"
 )
 
@@ -41,15 +39,16 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background()) // 创建了一个上下文，用于在应用中传递状态和取消信号。
 	defer cancel()
 
-	sess := sessions.New(sessions.Config{
-		Cookie:  "helloworld",
-		Expires: 60 * time.Minute,
-	})
+	// sess := sessions.New(sessions.Config{//Session，优化后抛弃
+	// 	Cookie:  "helloworld",
+	// 	Expires: 60 * time.Minute,
+	// })
 
 	user := repositories.NewUserManagerRepository("user", db) //user数据库
 	userService := services.NewService(user)
 	userPro := mvc.New(app.Party("/user"))
-	userPro.Register(userService, ctx, sess.Start)
+	// userPro.Register(userService, ctx, sess.Start)//抛弃session
+	userPro.Register(userService, ctx)
 	userPro.Handle(new(controllers.UserController))
 
 	//注册product控制器
@@ -60,11 +59,12 @@ func main() {
 	proProduct := app.Party("/product")
 	pro := mvc.New(proProduct)
 	proProduct.Use(middleware.AuthConProduct) //权限设置，只有登陆以后才能点开商品详情
-	pro.Register(productService, orderService, sess.Start)
+	// pro.Register(productService, orderService, sess.Start)//抛弃session
+	pro.Register(productService, orderService)
 	pro.Handle(new(controllers.ProductController))
 
 	app.Run(
-		iris.Addr("0.0.0.0:8082"),
+		iris.Addr("0.0.0.0:8082"), //原先是8082
 		iris.WithoutServerError(iris.ErrServerClosed),
 		iris.WithOptimizations,
 	)

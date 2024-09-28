@@ -1,4 +1,9 @@
 Process Record here.
+9/25:
+
+Static web has finished. See http://product.shuhang.shop/html/htmlProduct.html
+<img width="1470" alt="image" src="https://github.com/user-attachments/assets/0ea97f9f-50d8-48ce-9c5a-b5dbb507b277">
+
 
 9/22:
 

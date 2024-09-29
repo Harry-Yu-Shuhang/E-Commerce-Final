@@ -1,8 +1,6 @@
 Process Record here.
+
 9/28:
-
-
-Implement cookie verification using the principles of consistent hashing.
 
 According to WPK Stress Testing， QPS can reach over 200000.
 

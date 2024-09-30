@@ -7,8 +7,8 @@ import (
 	"imooc-product/repositories"
 	"imooc-product/services"
 
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/mvc"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/mvc"
 	"github.com/opentracing/opentracing-go/log"
 )
 
@@ -45,7 +45,7 @@ func main() {
 	product.Register(ctx, productService)
 	product.Handle(new(controllers.ProductController))
 
-	orderRepository := repositories.NewOrderMangerRepository("order", db)
+	orderRepository := repositories.NewOrderMangerRepository("`order`", db)
 	orderService := services.NewOrderService(orderRepository)
 	orderParty := app.Party("/order")
 	order := mvc.New(orderParty)

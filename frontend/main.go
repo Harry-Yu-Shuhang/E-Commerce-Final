@@ -35,7 +35,8 @@ func main() {
 	//连接数据库
 	db, err := common.NewMysqlConn()
 	if err != nil {
-
+		app.Logger().Errorf("Failed to connect to database: %v", err)
+		return
 	}
 	//ctx, cancel := context.WithCancel(context.Background())
 	//defer cancel()
@@ -51,7 +52,7 @@ func main() {
 	//注册product控制器
 	product := repositories.NewProductManager("product", db)
 	productService := services.NewProductService(product)
-	order := repositories.NewOrderMangerRepository("order", db)
+	order := repositories.NewOrderMangerRepository("`order`", db)
 	orderService := services.NewOrderService(order)
 	proProduct := app.Party("/product")
 	pro := mvc.New(proProduct)

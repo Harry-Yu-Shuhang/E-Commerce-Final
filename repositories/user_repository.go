@@ -48,10 +48,10 @@ func (u *UserManagerRepository) Select(userName string) (user *datamodels.User, 
 
 	sql := "Select * from " + u.table + " where userName=?"
 	rows, errRows := u.mysqlConn.Query(sql, userName)
-	defer rows.Close()
 	if errRows != nil {
 		return &datamodels.User{}, errRows
 	}
+	defer rows.Close()
 
 	result := common.GetResultRow(rows)
 	if len(result) == 0 {
@@ -70,10 +70,10 @@ func (u *UserManagerRepository) Insert(user *datamodels.User) (userId int64, err
 
 	sql := "INSERT " + u.table + " SET nickName=?,userName=?,passWord=?"
 	stmt, errStmt := u.mysqlConn.Prepare(sql)
-	defer stmt.Close()
 	if errStmt != nil {
 		return userId, errStmt
 	}
+	defer stmt.Close()
 	result, errResult := stmt.Exec(user.NickName, user.UserName, user.HashPassword)
 	if errResult != nil {
 		return userId, errResult
@@ -87,10 +87,10 @@ func (u *UserManagerRepository) SelectByID(userId int64) (user *datamodels.User,
 	}
 	sql := "select * from " + u.table + " where ID=" + strconv.FormatInt(userId, 10)
 	row, errRow := u.mysqlConn.Query(sql)
-	defer row.Close()
 	if errRow != nil {
 		return &datamodels.User{}, errRow
 	}
+	defer row.Close()
 	result := common.GetResultRow(row)
 	if len(result) == 0 {
 		return &datamodels.User{}, errors.New("用户不存在！")

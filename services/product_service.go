@@ -18,7 +18,7 @@ type ProductService struct {
 	productRepository repositories.IProduct
 }
 
-//初始化函数
+// 初始化函数
 func NewProductService(repository repositories.IProduct) IProductService {
 	return &ProductService{repository}
 }

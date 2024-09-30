@@ -1,23 +1,21 @@
 package controllers
 
 import (
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/mvc"
-	"github.com/kataras/iris/sessions"
+	"fmt"
 	"imooc-product/datamodels"
+	"imooc-product/encrypt"
 	"imooc-product/services"
+	"imooc-product/tool"
 	"strconv"
 
-
-	"fmt"
-	"imooc-product/encrypt"
-	"imooc-product/tool"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/mvc"
 )
 
 type UserController struct {
 	Ctx     iris.Context
 	Service services.IUserService
-	Session *sessions.Session
+	// Session *sessions.Session
 }
 
 func (c *UserController) GetRegister() mvc.View {
@@ -47,7 +45,7 @@ func (c *UserController) PostRegister() {
 		return
 	}
 	c.Ctx.Redirect("/user/login")
-	return
+	// return
 }
 
 func (c *UserController) GetLogin() mvc.View {
@@ -65,6 +63,7 @@ func (c *UserController) PostLogin() mvc.Response {
 	//2、验证账号密码正确
 	user, isOk := c.Service.IsPwdSuccess(userName, password)
 	if !isOk {
+		//fmt.Println("这一步执行了")//说明验证失败
 		return mvc.Response{
 			Path: "/user/login",
 		}

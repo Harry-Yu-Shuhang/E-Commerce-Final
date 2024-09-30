@@ -991,7 +991,7 @@
             return null;
     }
 
-    //如果没有登陆，强制重新登陆
+    // 如果没有登陆强制重新登陆
     if (getCookie(userString)==null) {
         location.href=redirectUrl
     }
@@ -1008,10 +1008,10 @@
         //1.创建ajax引擎对象
         var xmlHttp;
         if (window.XMLHttpRequest){
-            //IE7+,Firefox,Chrome,Opera,Safari
+            //IE7+,Firefox,Chrome,Opera,Safari都支持
             xmlHttp=new XMLHttpRequest();
         }else {
-            //IE6,IE5
+            //IE6,IE5等
             xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
         //2.为引擎对象绑定监听事件
@@ -1027,7 +1027,7 @@
                     if (result=="false"){
                         alert("未抢到，请稍后重试！");
                     }else {
-                        // location.href="/product/"
+                        // location.href="/product/"//这里可以自己做一个下单成功的页面
                         alert("抢购成功！");
                     }
                 }

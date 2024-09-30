@@ -18,7 +18,7 @@ func main() {
 	//创建product serivce
 	productService := services.NewProductService(product)
 	//创建Order数据库实例
-	order := repositories.NewOrderMangerRepository("order", db)
+	order := repositories.NewOrderMangerRepository("`order`", db)
 	//创建order Service
 	orderService := services.NewOrderService(order)
 

@@ -12,7 +12,6 @@ import (
 
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/mvc"
-	"github.com/kataras/iris/v12/sessions"
 )
 
 type ProductController struct {
@@ -20,7 +19,7 @@ type ProductController struct {
 	ProductService services.IProductService
 	OrderService   services.IOrderService
 	RabbitMQ       *rabbitmq.RabbitMQ
-	Session        *sessions.Session
+	// Session        *sessions.Session//优化后抛弃
 }
 
 var (

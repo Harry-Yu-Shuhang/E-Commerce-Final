@@ -19,7 +19,7 @@ import (
 )
 
 // 设置集群地址，最好内网IP
-var hostArray = []string{"192.168.0.106", "192.168.0.106"}
+var hostArray = []string{"172.19.239.82", "172.19.239.82"} //改成服务器ip，这里是本机ip进行本地测试
 
 var localHost = ""
 
@@ -179,11 +179,12 @@ func GetCurl(hostUrl string, request *http.Request) (response *http.Response, bo
 
 	//获取返回结果
 	response, err = client.Do(req)
-	defer response.Body.Close()
 	if err != nil {
 		return
 	}
+	defer response.Body.Close()
 	body, err = io.ReadAll(response.Body)
+
 	return
 }
 
@@ -217,6 +218,7 @@ func Check(w http.ResponseWriter, r *http.Request) {
 
 	//1.分布式权限验证
 	right := accessControl.GetDistributedRight(r)
+	// fmt.Println(right) //这里返回true
 	if right == false {
 		w.Write([]byte("false"))
 		return
@@ -224,6 +226,9 @@ func Check(w http.ResponseWriter, r *http.Request) {
 	//2.获取数量控制权限，防止秒杀出现超卖现象
 	hostUrl := "http://" + GetOneIp + ":" + GetOnePort + "/getOne"
 	responseValidate, validateBody, err := GetCurl(hostUrl, r)
+	// fmt.Println("执行点1")
+	// fmt.Println("hostUrl:", hostUrl)
+	// fmt.Println(responseValidate, '\n', validateBody, '\n', err)
 	if err != nil {
 		w.Write([]byte("false"))
 		return
@@ -349,6 +354,7 @@ func main() {
 	//2、启动服务
 	http.HandleFunc("/check", filter.Handle(Check))
 	http.HandleFunc("/checkRight", filter.Handle(CheckRight))
+
 	//启动服务
 	http.ListenAndServe(":8083", nil)
 }

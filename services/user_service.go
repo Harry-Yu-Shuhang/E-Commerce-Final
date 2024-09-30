@@ -2,9 +2,10 @@ package services
 
 import (
 	"errors"
-	"golang.org/x/crypto/bcrypt"
 	"imooc-product/datamodels"
 	"imooc-product/repositories"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type IUserService interface {
@@ -27,7 +28,10 @@ func (u *UserService) IsPwdSuccess(userName string, pwd string) (user *datamodel
 	if err != nil {
 		return
 	}
+	// fmt.Println("user.HashPassword=", user.HashPassword) //空的
+
 	isOk, _ = ValidatePassword(pwd, user.HashPassword)
+	// fmt.Println(isOk)
 
 	if !isOk {
 		return &datamodels.User{}, false

@@ -9,29 +9,29 @@ import (
 
 var sum int64 = 0
 
-//预存商品数量
+// 预存商品数量
 var productNum int64 = 1000000
 
-//互斥锁
+// 互斥锁
 var mutex sync.Mutex
 
-//计数
+// 计数
 var count int64 = 0
 
-//获取秒杀商品
+// 获取秒杀商品
 func GetOneProduct() bool {
 	//加锁
 	mutex.Lock()
 	defer mutex.Unlock()
 	count += 1
 	//判断数据是否超限
-	if count%100 == 0 {
-		if sum < productNum {
-			sum += 1
-			fmt.Println(sum)
-			return true
-		}
+	// if count%100 == 0 {
+	if sum < productNum {
+		sum += 1
+		fmt.Println(sum)
+		return true
 	}
+	//}测试的时候注释掉%100
 	return false
 
 }

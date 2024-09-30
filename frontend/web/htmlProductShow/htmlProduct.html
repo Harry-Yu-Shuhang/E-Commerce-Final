@@ -548,6 +548,7 @@
 
                         <div class="row row-10 product-single__actions clearfix">
                             <div class="col">
+                                <!-- 当前商品id为1，hidden表示网页上不可见 -->
                                 <input id="productID" value="1" hidden>
                                 <input type="button" value="立即抢购" id="getButton" onclick="rushToBuy()">
                             </div>
@@ -971,9 +972,9 @@
     var userString = "uid"
     //抢购按钮ID
     var rushButtonID = "getButton"
-    //跳转地址
+    //跳转地址，没登录就跳转登陆界面
     var redirectUrl ="/user/login"
-    //时间间隔
+    //时间间隔，10秒
     var interval=10
     //计数器
     var count = interval
@@ -984,7 +985,8 @@
     function getCookie(name) {
         var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
         if (arr=document.cookie.match(reg))
-            return unescape(arr[2]);
+            // return unescape(arr[2]);//解码，过时了，换成decodeURIComponent，更安全,支持的字符更多
+            return decodeURIComponent(arr[2]);
         else
             return null;
     }
@@ -994,10 +996,11 @@
         location.href=redirectUrl
     }
 
+    //点击按钮触发的函数
     function rushToBuy() {
         //获取要携带的参数
         var productID = document.getElementById("productID").value;
-        //设置按钮不可用
+        //设置按钮不可用,也就是点击以后再点击就不触发了
         document.getElementById(rushButtonID).setAttribute("disabled",true);
         //开始倒计时
         timeSub();
@@ -1037,12 +1040,13 @@
     }
 
     function timeSub() {
-        inter=setInterval("timeFuc()",1000)
+        inter=setInterval("timeFuc()",1000)//每过1000毫秒也就是1秒
     }
 
     function timeFuc() {
         count--;
         if (count<=0) {
+            //允许用户再次抢购
             count=interval;
             //打开按钮
             document.getElementById(rushButtonID).removeAttribute("disabled");

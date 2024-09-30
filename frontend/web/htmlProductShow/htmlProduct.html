@@ -973,7 +973,7 @@
     //抢购按钮ID
     var rushButtonID = "getButton"
     //跳转地址，没登录就跳转登陆界面
-    // var redirectUrl ="/user/login"//这里注释掉
+    var redirectUrl ="/user/login"
     //时间间隔，10秒
     var interval=10
     //计数器
@@ -991,10 +991,10 @@
             return null;
     }
 
-    // 如果没有登陆强制重新登陆
-    // if (getCookie(userString)==null) {
-    //     location.href=redirectUrl
-    // }//这里注释掉
+    //如果没有登陆强制重新登陆
+    if (getCookie(userString)==null) {
+        location.href=redirectUrl
+    }
 
     //点击按钮触发的函数
     function rushToBuy() {

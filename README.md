@@ -1,5 +1,12 @@
 Process Record here.
 
+9/30:
+
+Succeed to deal with flash sale
+
+<img width="1225" alt="image" src="https://github.com/user-attachments/assets/a3ac1ae1-9b4a-4910-8cdf-cb6de80dac81">
+
+
 9/28:
 
 According to WPK Stress Testing， QPS can reach over 200000.

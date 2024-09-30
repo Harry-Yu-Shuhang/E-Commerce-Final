@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"encoding/json"
 	"imooc-product/datamodels"
+	"imooc-product/rabbitmq"
 	"imooc-product/services"
 	"os"
 	"path/filepath"
@@ -10,14 +12,14 @@ import (
 
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/mvc"
-	"github.com/kataras/iris/v12/sessions"
 )
 
 type ProductController struct {
 	Ctx            iris.Context
 	ProductService services.IProductService
 	OrderService   services.IOrderService
-	Session        *sessions.Session
+	RabbitMQ       *rabbitmq.RabbitMQ
+	// Session        *sessions.Session优化后抛弃session
 }
 
 var (
@@ -90,51 +92,74 @@ func (p *ProductController) GetDetail() mvc.View { //这里函数名是Detail，
 	}
 }
 
-func (p *ProductController) GetOrder() mvc.View { //这个功能是product/order界面的后端
+// func (p *ProductController) GetOrder() mvc.View { //这个功能是product/order界面的后端,优化后改掉
+func (p *ProductController) GetOrder() []byte {
 	productString := p.Ctx.URLParam("productID")
 	userString := p.Ctx.GetCookie("uid") //userID
-	productID, err := strconv.Atoi(productString)
+	// productID, err := strconv.Atoi(productString)优化后改动
+	productID, err := strconv.ParseInt(productString, 10, 64) //十进制，64位
 	if err != nil {
 		p.Ctx.Application().Logger().Debug(err)
 	}
-	product, err := p.ProductService.GetProductByID(int64(productID))
+	//用RabbitMQ优化抢购逻辑
+	userID, err := strconv.ParseInt(userString, 10, 64)
 	if err != nil {
 		p.Ctx.Application().Logger().Debug(err)
 	}
-	var orderID int64
-	showMessage := "Purchase failed." //默认抢购失败
-	//判断商品数量是否满足需求
-	if product.ProductNum > 0 {
-		//扣除商品数量
-		product.ProductNum -= 1
-		err := p.ProductService.UpdateProduct(product)
-		if err != nil {
-			p.Ctx.Application().Logger().Debug(err)
-		}
-		//创建订单
-		userID, err := strconv.Atoi(userString)
-		if err != nil {
-			p.Ctx.Application().Logger().Debug(err)
-		}
-		order := &datamodels.Order{
-			UserID:      int64(userID),
-			ProductID:   int64(productID),
-			OrderStatus: datamodels.OrderSuccess, //int类型，不需要转换,value=1,抢到了就说明已经下单成功了
-		}
-		//新建订单
-		orderID, err = p.OrderService.InsertOrder(order)
-		if err != nil {
-			p.Ctx.Application().Logger().Debug(err)
-		} else {
-			showMessage = "Purchase success." //抢购成功
-		}
+
+	//创建消息体
+	message := datamodels.NewMessage(userID, productID)
+	//类型转化
+	byteMessage, err := json.Marshal(message)
+	if err != nil {
+		p.Ctx.Application().Logger().Debug(err)
 	}
-	return mvc.View{
-		Layout: "shared/productLayout.html",
-		Name:   "product/result.html",
-		Data: iris.Map{
-			"orderID":     orderID,
-			"showMessage": showMessage,
-		},
+	err = p.RabbitMQ.PublishSimple(string(byteMessage))
+	if err != nil {
+		p.Ctx.Application().Logger().Debug(err)
 	}
+	return []byte("true")
+
+	//普通方法的抢购逻辑,优化后删掉。大流量下会给数据库造成很大的压力
+	// product, err := p.ProductService.GetProductByID(int64(productID))
+	// if err != nil {
+	// 	p.Ctx.Application().Logger().Debug(err)
+	// }
+	// var orderID int64
+	// showMessage := "Purchase failed." //默认抢购失败
+	// //判断商品数量是否满足需求
+	// if product.ProductNum > 0 {
+	// 	//扣除商品数量
+	// 	product.ProductNum -= 1
+	// 	err := p.ProductService.UpdateProduct(product)
+	// 	if err != nil {
+	// 		p.Ctx.Application().Logger().Debug(err)
+	// 	}
+	// 	//创建订单
+	// 	userID, err := strconv.Atoi(userString)
+	// 	if err != nil {
+	// 		p.Ctx.Application().Logger().Debug(err)
+	// 	}
+	// 	order := &datamodels.Order{
+	// 		UserID:      int64(userID),
+	// 		ProductID:   int64(productID),
+	// 		OrderStatus: datamodels.OrderSuccess, //int类型，不需要转换,value=1,抢到了就说明已经下单成功了
+	// 	}
+	// 	//新建订单
+	// 	orderID, err = p.OrderService.InsertOrder(order)
+	// 	if err != nil {
+	// 		p.Ctx.Application().Logger().Debug(err)
+	// 	} else {
+	// 		showMessage = "Purchase success." //抢购成功
+	// 	}
+	// }
+
+	// return mvc.View{
+	// 	Layout: "shared/productLayout.html",
+	// 	Name:   "product/result.html",
+	// 	Data: iris.Map{
+	// 		"orderID":     orderID,
+	// 		"showMessage": showMessage,
+	// 	},
+	// }
 }

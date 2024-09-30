@@ -6,6 +6,7 @@ require (
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/kataras/iris/v12 v12.2.11
 	github.com/opentracing/opentracing-go v1.2.0
+	github.com/rabbitmq/amqp091-go v1.10.0
 	golang.org/x/crypto v0.22.0
 )
 

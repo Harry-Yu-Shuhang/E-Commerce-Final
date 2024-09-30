@@ -62,7 +62,7 @@ func (o *OrderManagerRepository) Insert(order *datamodels.Order) (productID int6
 	return result.LastInsertId() //这样写更简单
 }
 
-func (o *OrderManagerRepository) Delete(productID int64) (isOk bool) { //删除订单
+func (o *OrderManagerRepository) Delete(orderID int64) (isOk bool) { //删除订单
 	if err := o.Conn(); err != nil {
 		return //返回false直接失败
 	}
@@ -72,7 +72,7 @@ func (o *OrderManagerRepository) Delete(productID int64) (isOk bool) { //删除�
 		return
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(productID) //填入sql语句的变量ID
+	_, err = stmt.Exec(orderID) //填入sql语句的变量ID
 	if err != nil {
 		return
 	}

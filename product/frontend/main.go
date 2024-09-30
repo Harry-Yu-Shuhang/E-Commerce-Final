@@ -5,6 +5,7 @@ import (
 	"imooc-product/common"
 	"imooc-product/frontend/middleware"
 	"imooc-product/frontend/web/controllers"
+	"imooc-product/rabbitmq"
 	"imooc-product/repositories"
 	"imooc-product/services"
 
@@ -48,8 +49,10 @@ func main() {
 	userService := services.NewService(user)
 	userPro := mvc.New(app.Party("/user"))
 	// userPro.Register(userService, ctx, sess.Start)//抛弃session
-	userPro.Register(userService, ctx)
+	userPro.Register(userService)
 	userPro.Handle(new(controllers.UserController))
+
+	rabbitmq := rabbitmq.NewRabbitMQSimple("imoocProduct")
 
 	//注册product控制器
 	product := repositories.NewProductManager("product", db)
@@ -60,7 +63,7 @@ func main() {
 	pro := mvc.New(proProduct)
 	proProduct.Use(middleware.AuthConProduct) //权限设置，只有登陆以后才能点开商品详情
 	// pro.Register(productService, orderService, sess.Start)//抛弃session
-	pro.Register(productService, orderService)
+	pro.Register(productService, orderService, ctx, rabbitmq)
 	pro.Handle(new(controllers.ProductController))
 
 	app.Run(

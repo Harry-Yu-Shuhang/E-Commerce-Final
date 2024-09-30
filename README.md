@@ -1,7 +1,16 @@
 Process Record here.
+
+9/28:
+
+According to WPK Stress Testing， QPS can reach over 200000.
+
+<img width="553" alt="image" src="https://github.com/user-attachments/assets/7a692b62-fe28-449a-a87c-6c0be9646c88">
+
+
 9/25:
 
 Static web has finished. See http://product.shuhang.shop/html/htmlProduct.html
+
 <img width="1470" alt="image" src="https://github.com/user-attachments/assets/0ea97f9f-50d8-48ce-9c5a-b5dbb507b277">
 
 

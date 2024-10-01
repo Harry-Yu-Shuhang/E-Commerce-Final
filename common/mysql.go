@@ -2,16 +2,17 @@ package common
 
 import (
 	"database/sql"
+
 	_ "github.com/go-sql-driver/mysql"
 )
 
-//创建mysql 连接
+// 创建mysql 连接
 func NewMysqlConn() (db *sql.DB, err error) {
-	db, err = sql.Open("mysql", "root:imooc@tcp(127.0.0.1:3306)/imooc?charset=utf8")
+	db, err = sql.Open("mysql", "root:Yushuhang2002@tcp(127.0.0.1:3306)/imooc?charset=utf8")
 	return
 }
 
-//获取返回值，获取一条
+// 获取返回值，获取一条
 func GetResultRow(rows *sql.Rows) map[string]string {
 	columns, _ := rows.Columns()
 	scanArgs := make([]interface{}, len(columns))
@@ -33,7 +34,7 @@ func GetResultRow(rows *sql.Rows) map[string]string {
 	return record
 }
 
-//获取所有
+// 获取所有
 func GetResultRows(rows *sql.Rows) map[int]map[string]string {
 	//返回所有列
 	columns, _ := rows.Columns()

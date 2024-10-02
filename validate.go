@@ -19,7 +19,7 @@ import (
 )
 
 // 设置集群地址，最好内网IP
-var hostArray = []string{"172.19.239.82", "172.19.239.82"} //改成服务器ip，这里是本机ip进行本地测试
+var hostArray = []string{"172.28.86.103", "172.28.86.103"} //改成服务器ip，这里是服务器内网ip
 
 var localHost = ""
 

@@ -54,7 +54,7 @@ func main() {
 
 	//6.启动服务
 	app.Run(
-		iris.Addr("localhost:8080"),
+		iris.Addr("0.0.0.0:8080"),
 		// iris.WithoutVersionChecker,
 		iris.WithoutServerError(iris.ErrServerClosed),
 		iris.WithOptimizations,
